@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { TCourse } from './course.interface';
+import { TBlog } from './blog.interface';
 
-const blogSchema = new Schema<TCourse>(
+const blogSchema = new Schema<TBlog>(
   {
     title: {
       type: String,
@@ -29,4 +29,4 @@ const blogSchema = new Schema<TCourse>(
   },
 );
 
-export const Blog = model<TCourse>('Blog', blogSchema);
+export const Blog = model<TBlog>('Blog', blogSchema);

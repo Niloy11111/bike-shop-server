@@ -19,14 +19,14 @@ router.post(
 //   CourseControllers.getSingleCourse,
 // );
 
-// router.delete('/:id', CourseControllers.deleteCourse);
+router.delete('/blogs/:id', auth('user', 'admin'), BlogControllers.deleteBlog);
 
-// router.patch(
-//   '/:id',
-//   auth('admin'),
-//   validateRequest(CourseValidations.updateCourseValidationSchema),
-//   CourseControllers.updateCourse,
-// );
+router.patch(
+  '/blogs/:id',
+  auth('user', 'admin'),
+  validateRequest(BlogValidations.updateBlogValidationSchema),
+  BlogControllers.updateBlog,
+);
 
 // router.put(
 //   '/:courseId/assign-faculties',
