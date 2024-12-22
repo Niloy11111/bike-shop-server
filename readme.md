@@ -1,56 +1,56 @@
-### rm -rf .git
-
-### rm -rf .vercel
-
 # Bike Store
 
 #### Live Deployment Link
 
-[https://bike-store-a2.vercel.app/](https://bike-store-a2.vercel.app/)
+[https://blog-project-a3-ten.vercel.app/](https://blog-project-a3-ten.vercel.app/)
 
-## Features
+1. User Roles:
 
-### 1. Create a Bike
+   - Admin: Can delete any blog, block users, cannot update blogs.
+   - User: Can register, login, create, update, delete their own blogs.
 
-Users can create a bike by providing the bike's name, brand, category, description, quantity, and stock status in the request body.
+2. Authentication:
 
-**Endpoint**: `/api/products`
+   - Register: Registers a user with name, email, password.
+   - Login: Authenticates user, returns a JWT token.
 
-### 2. Get All Bikes
+3. Blog Management:
 
-Users can retrieve the list of all bikes.
+   - Create Blog: Logged-in users can create blogs with title and content.
+   - Update Blog: Logged-in users can update their own blogs by ID.
+   - Delete Blog: Logged-in users can delete their own blogs by ID.
+   - Get All Blogs (Public): View all blogs with search, sort, filter options.
 
-**Endpoint**: `/api/products`
+4. Admin Actions:
 
-### 3. Get a Specific Bike
+   - Block User: Admin can block users by setting `isBlocked: true`.
+   - Delete Blog: Admin can delete any blog by ID.
 
-Users can retrieve details of a specific bike by providing the `productId`, which is the `_id` of the bike in the database.
+5. Models:
 
-**Endpoint**: `/api/products/:productId`
+   - User Model: Includes `name`, `email`, `password`, `role`, `isBlocked`, timestamps.
+   - Blog Model: Includes `title`, `content`, `author`, `isPublished`, timestamps.
 
-### 4. Update a Bike
+6. API Endpoints:
 
-Users can update an existing bike by providing a valid JSON payload in the request body. The `productId` refers to the `_id` of the bike document in the database.
+   - POST /api/auth/register: Register a new user.
+   - POST /api/auth/login: User login.
+   - POST /api/blogs: Create a blog.
+   - PATCH /api/blogs/:id: Update a blog by ID.
+   - DELETE /api/blogs/:id: Delete a blog by ID.
+   - GET /api/blogs: Fetch blogs with search, sort, filter.
+   - PATCH /api/admin/users/:userId/block: Admin blocks a user.
+   - DELETE /api/admin/blogs/:id: Admin deletes a blog.
 
-**Endpoint**: `/api/products/:productId`
+7. Bonus:
+   - Consistent error handling: Manage Zod validation, authentication, authorization, and server errors.
 
-### 5. Delete a Bike
+Submission:
 
-Users can delete a bike by providing the `productId`, which is the `_id` of the bike in the database.
-
-**Endpoint**: `/api/products/:productId`
-
-### 6. Order a Bike
-
-Users can place an order for a bike by providing a valid JSON payload in the request body.
-
-**Endpoint**: `/api/orders`
-
-### 7. Calculate Revenue from Orders
-
-This endpoint returns the total revenue, which is the sum of the `totalPrice` from all orders.
-
-**Endpoint**: `/api/orders/revenue`
+- Provide live deployment link, GitHub repo, admin credentials, and project overview video.
+  Deadline:
+- Full marks: Dec 21, 2024.
+- Reduced marks: Dec 22, 2024.
 
 ## Setup Instructions
 

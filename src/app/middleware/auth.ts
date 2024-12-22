@@ -9,7 +9,7 @@ import catchAsync from '../utils/catchAsync';
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req?.headers?.authorization.split(' ')[1];
+    const token = req?.headers?.authorization?.split(' ')[1];
 
     //if the token is send from the client
     if (!token) {
@@ -22,11 +22,11 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload;
 
-    const { role, _id, iat } = decoded;
+    const { role, _id } = decoded;
 
     const user = await User.findById(_id);
 
-    // console.log('from auth', { decoded, user: user });
+    console.log('from auth', { decoded, user: user });
 
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');

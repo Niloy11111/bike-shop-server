@@ -11,9 +11,6 @@ const app: Application = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use('/api/products', bikeRouter);
-// app.use('/api/orders', orderRouter);
-
 //importing router from routes/index.ts
 app.use('/api', router);
 app.use('/api', BlogRouter);

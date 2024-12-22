@@ -13,12 +13,6 @@ router.post(
   BlogControllers.createBlog,
 );
 
-// router.get(
-//   '/:id',
-//   auth('student', 'faculty', 'admin'),
-//   CourseControllers.getSingleCourse,
-// );
-
 router.delete('/blogs/:id', auth('user', 'admin'), BlogControllers.deleteBlog);
 
 router.patch(
@@ -27,19 +21,6 @@ router.patch(
   validateRequest(BlogValidations.updateBlogValidationSchema),
   BlogControllers.updateBlog,
 );
-
-// router.put(
-//   '/:courseId/assign-faculties',
-//   validateRequest(CourseValidations.facultiesWithCourseValidationSchema),
-//   CourseControllers.assignFacultiesWithCourse,
-// );
-
-// router.delete(
-//   '/:courseId/remove-faculties',
-//   auth('admin'),
-//   validateRequest(CourseValidations.facultiesWithCourseValidationSchema),
-//   CourseControllers.removeFacultiesFromCourse,
-// );
 
 router.get('/blogs', BlogControllers.getAllBlogs);
 
