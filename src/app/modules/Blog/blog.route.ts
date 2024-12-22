@@ -41,6 +41,6 @@ router.patch(
 //   CourseControllers.removeFacultiesFromCourse,
 // );
 
-// router.get('/', CourseControllers.getAllCourses);
+router.get('/blogs', BlogControllers.getAllBlogs);
 
 export const BlogRouter = router;

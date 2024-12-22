@@ -32,13 +32,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
     }
 
-    if (user._id.toString() !== _id) {
-      throw new AppError(
-        httpStatus.UNAUTHORIZED,
-        'Token does not belong to this user',
-      );
-    }
-
     if (user?.isBlocked) {
       throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
     }

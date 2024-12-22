@@ -1,6 +1,4 @@
 import { Types } from 'mongoose';
-import QueryBuilder from '../../builder/Querybuilder';
-import { BlogSearchableFields } from './blog.contants';
 import { TBlog } from './blog.interface';
 import { Blog } from './blog.model';
 const createBlogIntoDB = async (payload: TBlog, authorId: Types.ObjectId) => {
@@ -10,15 +8,50 @@ const createBlogIntoDB = async (payload: TBlog, authorId: Types.ObjectId) => {
   return result;
 };
 const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
-  const courseQuery = new QueryBuilder(Blog.find(), query)
-    .search(BlogSearchableFields)
-    .filter()
-    .sort()
-    .paginate()
-    .fields();
+  const queryObj = { ...query };
 
-  const result = await courseQuery.modelQuery;
-  return result;
+  let search = '';
+  if (query?.search) {
+    search = query?.search as string;
+  }
+
+  const searchableFields = ['title', 'content'];
+
+  //   filtering
+  const excludeFields = ['search', 'content', 'sortBy', 'sortOrder', 'filter'];
+
+  excludeFields.forEach((el) => delete queryObj[el]);
+
+  let filter = '';
+  if (query.filter) {
+    filter = query?.filter as string;
+  }
+  const searchQuery = Blog.find({
+    $or: searchableFields.map((field) => ({
+      [field]: { $regex: search, $options: 'i' },
+    })),
+    ...(filter && { author: filter }),
+  });
+
+  const filterQuery = searchQuery
+    .find(queryObj)
+    .select('_id title content author')
+    .populate('author');
+
+  let sortBy = 'createdAt';
+
+  if (query.sortBy) {
+    sortBy = query.sortBy as string;
+  }
+
+  if (query?.sortOrder) {
+    if (query?.sortOrder === 'desc') sortBy = `-${sortBy}`;
+  }
+
+  // console.log(`-${sortBy}`);
+  const sortQuery = await filterQuery.sort(sortBy);
+
+  return sortQuery;
 };
 const getSingleBlogFromDB = async (id: string) => {
   const result = await Blog.findById(id);

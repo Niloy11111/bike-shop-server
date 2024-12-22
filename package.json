@@ -11,7 +11,7 @@
     "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "start:prod": "node ./dist/server.js",
     "test": "node src/test.js",
-    "commit": "git add . && git commit -m \"Register user and log in user with token handling\" && git push"
+    "commit": "git add . && git commit -m \"made admin action api like block user,delete blog \" && git push"
   },
   "keywords": [],
   "author": "",
