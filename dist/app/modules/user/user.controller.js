@@ -20,7 +20,6 @@ const user_service_1 = require("./user.service");
 const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = yield user_service_1.UserServices.createUserIntoDB(req.body);
     const modifiedUser = {
-        _id: userData === null || userData === void 0 ? void 0 : userData._id,
         name: userData === null || userData === void 0 ? void 0 : userData.name,
         email: userData === null || userData === void 0 ? void 0 : userData.email,
     };
@@ -31,6 +30,31 @@ const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: modifiedUser,
     });
 }));
+const getUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const order = yield user_service_1.UserServices.getUsers();
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.CREATED,
+        message: 'Users retrieved successfully',
+        data: order,
+    });
+}));
+const updateUserProfile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // get the orderId in parmas
+    const userId = req.params.userId;
+    // take the json body of bike details from response and send it to update function
+    const body = Object.assign({}, req.body);
+    const result = yield user_service_1.UserServices.updateUserProfile(userId, body);
+    // console.log('here', req.user, req.params);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'profile updated successfully',
+        data: result,
+    });
+}));
 exports.UserControllers = {
     createUser,
+    getUsers,
+    updateUserProfile,
 };

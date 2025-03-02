@@ -4,6 +4,11 @@ import config from '../../config';
 import { TUser, UserModel } from './user.interface';
 const userSchema = new Schema<TUser, UserModel>(
   {
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     name: {
       type: String,
       required: true,
@@ -17,6 +22,13 @@ const userSchema = new Schema<TUser, UserModel>(
       type: String,
       required: true,
     },
+    needsPasswordChange: {
+      type: Boolean,
+      default: true,
+    },
+    passwordChangedAt: {
+      type: Date,
+    },
     role: {
       type: String,
       enum: ['admin', 'customer'],
@@ -26,6 +38,14 @@ const userSchema = new Schema<TUser, UserModel>(
       type: Boolean,
       default: false,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    phone: { type: String, default: 'N/A' },
+    img: { type: String, default: 'N/A' },
+    country: { type: String, default: 'N/A' },
+    city: { type: String, default: 'N/A' },
   },
   {
     timestamps: true,
@@ -38,6 +58,7 @@ userSchema.pre('save', async function (next) {
 
   const user = this;
   //hashing password and save into DB
+  console.log('from user', user.password);
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_rounds),
@@ -61,6 +82,16 @@ userSchema.statics.isPasswordMatched = async function (
   hashedPassword,
 ) {
   return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
+
+userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
+  passwordChangedTimestamp: Date,
+  jwtIssuedTimestamp: number,
+) {
+  const passwordChangedTime =
+    new Date(passwordChangedTimestamp).getTime() / 1000;
+
+  return passwordChangedTime > jwtIssuedTimestamp;
 };
 
 export const User = model<TUser, UserModel>('User', userSchema);

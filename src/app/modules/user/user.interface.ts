@@ -2,12 +2,20 @@
 import { Model } from 'mongoose';
 import { USER_ROLE } from './user.const';
 
-export interface TUser {
+export interface TUser extends Document {
+  id: string;
   name: string;
   email: string;
   password: string;
+  needsPasswordChange: boolean;
+  passwordChangedAt?: Date;
   role: 'customer' | 'admin';
+  phone: string;
+  country: string;
+  city: string;
+  img?: string;
   isBlocked: boolean;
+  isDeleted: boolean;
 }
 
 //17:3 video

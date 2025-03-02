@@ -1,6 +1,6 @@
 import { TError, TGenericErrorResponse } from '../interface/error';
 
-const handleDuplicateError = (err): TGenericErrorResponse => {
+const handleDuplicateError = (err: Error): TGenericErrorResponse => {
   const extractedMessage = err.message.match(/"([^"]+)"/)?.[1];
 
   const error: TError = [

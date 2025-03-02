@@ -1,8 +1,10 @@
 export interface IBike {
   name: string;
   brand: string;
+  model: string;
   price: number;
-  category: 'Mountain' | 'Road' | 'Hybrid' | 'Electric';
+  photoURL: string;
+  category: 'Mountain' | 'Road' | 'Folding' | 'Electric';
   description: string;
   quantity: number;
   inStock: boolean;

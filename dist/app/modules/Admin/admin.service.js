@@ -10,17 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminServices = void 0;
-const blog_model_1 = require("../Blog/blog.model");
 const user_model_1 = require("../user/user.model");
 const blockUserFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const blog = yield user_model_1.User.findByIdAndUpdate(id, { isBlocked: true }, { new: true });
     return blog;
 });
-const deleteBlogByAdminFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const blog = yield blog_model_1.Blog.findByIdAndDelete(id);
+const deleteUserByAdminFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const blog = yield user_model_1.User.findByIdAndDelete(id);
     return blog;
 });
 exports.adminServices = {
-    deleteBlogByAdminFromDB,
+    deleteUserByAdminFromDB,
     blockUserFromDB,
 };

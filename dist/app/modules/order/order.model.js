@@ -1,46 +1,58 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
-const validator_1 = __importDefault(require("validator"));
-const orderSchema = new mongoose_1.Schema({
-    email: {
-        type: String,
-        required: [true, 'Please provide the customer email'],
-        validate: {
-            validator: (value) => validator_1.default.isEmail(value),
-            message: '{VALUE} is not valid email type',
-        },
+const OrderSchema = new mongoose_1.Schema({
+    user: {
+        type: mongoose_1.Schema.Types.Mixed,
+        required: true,
     },
-    product: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: 'Bike',
-        required: [true, 'Please provide the bike ID'],
-    },
-    quantity: {
-        type: Number,
-        required: [true, 'Please provide the quantity'],
-        validate: {
-            validator: function (value) {
-                return typeof value === 'number' && value > 0;
+    products: [
+        {
+            product: {
+                type: mongoose_1.Schema.Types.ObjectId,
+                ref: 'Bike',
+                required: true,
             },
-            message: '{VALUE} is not a positive quantity',
+            quantity: {
+                type: Number,
+                required: true,
+            },
+            category: {
+                type: String,
+                required: true,
+            },
+            price: {
+                type: Number,
+                required: true,
+            },
+            photoURL: { type: String, required: true },
+            productName: { type: String, required: true },
         },
-    },
+    ],
     totalPrice: {
         type: Number,
-        required: [true, 'Please provide the total price'],
-        validate: {
-            validator: function (value) {
-                return typeof value === 'number' && value > 0;
-            },
-            message: '{VALUE} is not a positive number',
-        },
+        required: true,
+    },
+    estimatedDeliveryDate: {
+        type: Date,
+        default: '',
+    },
+    status: {
+        type: String,
+        enum: ['Pending', 'Paid', 'Shipped', 'Completed', 'Cancelled'],
+        default: 'Pending',
+    },
+    transaction: {
+        id: String,
+        transactionStatus: String,
+        bank_status: String,
+        sp_code: String,
+        sp_message: String,
+        method: String,
+        date_time: String,
     },
 }, {
     timestamps: true,
 });
-const Order = (0, mongoose_1.model)('Order', orderSchema);
+const Order = (0, mongoose_1.model)('Order', OrderSchema);
 exports.default = Order;

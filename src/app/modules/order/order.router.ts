@@ -1,9 +1,45 @@
 import { Router } from 'express';
-import { revenueController } from '../revenue/revenue.controller';
+import auth from '../../middleware/auth';
+import { USER_ROLE } from '../user/user.const';
 import { orderController } from './order.controller';
 
-const orderRouter = Router();
+const orderRoutes = Router();
 
-orderRouter.post('/', orderController.createOrder);
-orderRouter.get('/revenue', revenueController.calculatetotalRevenue);
-export default orderRouter;
+// orderRoutes.post('/', orderController.createOrder);
+// orderRoutes.get('/revenue', revenueController.calculatetotalRevenue);
+
+orderRoutes.get(
+  '/verify',
+  auth(USER_ROLE.customer),
+  orderController.verifyPayment,
+);
+
+orderRoutes.post(
+  '/create-order',
+  auth(USER_ROLE.customer),
+  orderController.createOrder,
+);
+
+orderRoutes.get(
+  '/allOrders',
+  auth(USER_ROLE.customer, USER_ROLE.admin),
+  orderController.getOrders,
+);
+
+orderRoutes.patch(
+  '/:orderId',
+  auth(USER_ROLE.admin, USER_ROLE.customer),
+  orderController.getSingleOrder,
+);
+orderRoutes.get(
+  '/:orderId',
+  auth(USER_ROLE.admin),
+  orderController.getSingleOrder,
+);
+orderRoutes.delete(
+  '/:orderId',
+  auth(USER_ROLE.admin),
+  orderController.deleteOrder,
+);
+
+export default orderRoutes;

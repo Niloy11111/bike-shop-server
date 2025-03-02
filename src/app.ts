@@ -3,31 +3,29 @@ import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import globalErrorHanler from './app/middleware/globalErrorHandler';
 import notFound from './app/middleware/notFound';
-import bikeRouter from './app/modules/bike/bike.router';
-import orderRouter from './app/modules/order/order.router';
+import router from './app/routes';
 const app: Application = express();
 
 //middleware
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  }),
+);
 
 //importing router from routes/index.ts
-app.use('/api/products', bikeRouter);
-app.use('/api/orders', orderRouter);
+
+app.use('/api/v1', router);
+// app.use('/api/orders', orderRouter);
 
 app.get('/', (req: Request, res: Response) => {
   res.send({
     status: true,
     message: 'server live',
-  });
-});
-
-app.use((req: Request, res: Response) => {
-  return res.status(404).json({
-    success: false,
-    message: 'api not found',
   });
 });
 

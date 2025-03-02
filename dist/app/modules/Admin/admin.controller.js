@@ -19,30 +19,22 @@ const blockUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     //   console.log({ user: req.user, params: req.params });
     const id = req.params.userId;
     yield admin_service_1.adminServices.blockUserFromDB(id);
-    // const { id } = req.params;
-    // const authorId = req?.user?._id;
-    // const findBlog = await Blog.findById(id);
-    // if (findBlog?.author.toString() !== authorId) {
-    //   throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');
-    // }
-    // const blog = await adminServices.blockUserFromDB(id, { isBlocked : true });
-    // console.log('here', req.user, req.params);
     res.send({
         success: true,
         message: 'user blocked successfully',
         statusCode: 200,
     });
 }));
-const deleteBlogByAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteUserByAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    yield admin_service_1.adminServices.deleteBlogByAdminFromDB(id);
+    yield admin_service_1.adminServices.deleteUserByAdminFromDB(id);
     res.send({
         success: true,
-        message: 'blog deleted successfully',
+        message: 'user deleted successfully',
         statusCode: 200,
     });
 }));
 exports.AdminControllers = {
-    deleteBlogByAdmin,
+    deleteUserByAdmin,
     blockUser,
 };

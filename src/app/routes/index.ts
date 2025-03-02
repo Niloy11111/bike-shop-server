@@ -1,17 +1,32 @@
 import { Router } from 'express';
 import { AdminRoutes } from '../modules/Admin/admin.route';
-import { UserRoutes } from '../modules/user/user.route';
+import { AuthRoutes } from '../modules/Auth/auth.route';
+import bikeRoutes from '../modules/bike/bike.router';
+import orderRoutes from '../modules/order/order.router';
+import UserRoutes from '../modules/user/user.route';
 
 const router = Router();
 
 const modulesRoutes = [
   {
-    path: '/auth',
+    path: '/users',
     route: UserRoutes,
+  },
+  {
+    path: '/auth',
+    route: AuthRoutes,
   },
   {
     path: '/admin',
     route: AdminRoutes,
+  },
+  {
+    path: '/products',
+    route: bikeRoutes,
+  },
+  {
+    path: '/orders',
+    route: orderRoutes,
   },
 ];
 

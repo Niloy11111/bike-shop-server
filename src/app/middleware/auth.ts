@@ -3,13 +3,16 @@ import httpStatus from 'http-status';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
 import { AppError } from '../errors/AppError';
+import { TOrderUser } from '../modules/order/order.interface';
 import { TUserRole } from '../modules/user/user.interface';
 import { User } from '../modules/user/user.model';
 import catchAsync from '../utils/catchAsync';
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const token = req?.headers?.authorization?.split(' ')[1];
+    const token = req?.headers?.authorization;
+
+    console.log('ksdjfs', token);
 
     //if the token is send from the client
     if (!token) {
@@ -22,11 +25,11 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload;
 
-    const { role, _id } = decoded;
+    const { role, email } = decoded;
 
-    const user = await User.findById(_id);
+    const user = await User.findOne({ email });
 
-    console.log('from auth', { decoded, user: user });
+    // console.log('from auth', { decoded, user: user });
 
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
@@ -41,7 +44,8 @@ const auth = (...requiredRoles: TUserRole[]) => {
     }
 
     //decode undefiend
-    req.user = decoded as JwtPayload;
+
+    (req.user as TOrderUser) = user as TOrderUser;
     next();
   });
 };

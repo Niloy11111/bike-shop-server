@@ -1,41 +1,56 @@
 import { model, Schema } from 'mongoose';
-import validator from 'validator';
-import { IOrder } from './order.interface';
+import { TOrder } from './order.interface';
 
-const orderSchema = new Schema<IOrder>(
+const OrderSchema = new Schema<TOrder>(
   {
-    email: {
-      type: String,
-      required: [true, 'Please provide the customer email'],
-      validate: {
-        validator: (value: string) => validator.isEmail(value),
-        message: '{VALUE} is not valid email type',
-      },
+    user: {
+      type: Schema.Types.Mixed,
+      required: true,
     },
-    product: {
-      type: Schema.Types.ObjectId,
-      ref: 'Bike',
-      required: [true, 'Please provide the bike ID'],
-    },
-    quantity: {
-      type: Number,
-      required: [true, 'Please provide the quantity'],
-      validate: {
-        validator: function (value: number) {
-          return typeof value === 'number' && value > 0;
+    products: [
+      {
+        product: {
+          type: Schema.Types.ObjectId,
+          ref: 'Bike',
+          required: true,
         },
-        message: '{VALUE} is not a positive quantity',
+        quantity: {
+          type: Number,
+          required: true,
+        },
+        category: {
+          type: String,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        photoURL: { type: String, required: true },
+        productName: { type: String, required: true },
       },
-    },
+    ],
     totalPrice: {
       type: Number,
-      required: [true, 'Please provide the total price'],
-      validate: {
-        validator: function (value: number) {
-          return typeof value === 'number' && value > 0;
-        },
-        message: '{VALUE} is not a positive number',
-      },
+      required: true,
+    },
+    estimatedDeliveryDate: {
+      type: Date,
+      default: '',
+    },
+    status: {
+      type: String,
+      enum: ['Pending', 'Paid', 'Shipped', 'Completed', 'Cancelled'],
+      default: 'Pending',
+    },
+    transaction: {
+      id: String,
+      transactionStatus: String,
+      bank_status: String,
+      sp_code: String,
+      sp_message: String,
+      method: String,
+      date_time: String,
     },
   },
   {
@@ -43,5 +58,6 @@ const orderSchema = new Schema<IOrder>(
   },
 );
 
-const Order = model<IOrder>('Order', orderSchema);
+const Order = model<TOrder>('Order', OrderSchema);
+
 export default Order;

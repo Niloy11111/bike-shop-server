@@ -6,21 +6,44 @@ const createBike = async (payload: IBike): Promise<IBike> => {
   return result;
 };
 
-const getBikes = async (searchTerm: string) => {
+const getBikes = async (
+  searchTerm: string,
+  minPrice: number,
+  maxPrice: number,
+  availability: boolean,
+) => {
   // filter data accordingto searchTerm using $or method
 
-  const query = searchTerm
+  const searchQueryObj = searchTerm
     ? {
         $or: [
-          { category: searchTerm },
-          { brand: searchTerm },
-          { name: searchTerm },
+          { category: { $regex: searchTerm, $options: 'i' } },
+          { brand: { $regex: searchTerm, $options: 'i' } },
+          { name: { $regex: searchTerm, $options: 'i' } },
+          { model: { $regex: searchTerm, $options: 'i' } },
         ],
       }
     : {};
-  const result = await Bike.find(query);
 
-  return result;
+  const searchQuery = Bike.find(searchQueryObj);
+
+  if (availability) {
+    const availabilityQueryQbj = {
+      inStock: availability,
+    };
+    const availabilityQuery = await searchQuery.find(availabilityQueryQbj);
+    return await availabilityQuery;
+  }
+
+  if (minPrice && maxPrice) {
+    const priceQueryObj = { price: { $gte: minPrice, $lte: maxPrice } };
+
+    const priceQuery = await searchQuery.find(priceQueryObj);
+
+    return await priceQuery;
+  }
+
+  return await searchQuery;
 };
 
 const getSingleBike = async (id: string) => {

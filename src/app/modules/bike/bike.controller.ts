@@ -20,7 +20,18 @@ const createBike = catchAsync(async (req, res) => {
 
 const getAllBikes = catchAsync(async (req, res) => {
   const searchTerm = req.query.searchTerm as string;
-  const result = await bikeService.getBikes(searchTerm);
+  const minPrice =
+    typeof req.query.minPrice === 'string' ? Number(req.query.minPrice) : 0;
+  const maxPrice =
+    typeof req.query.maxPrice === 'string' ? Number(req.query.maxPrice) : 0;
+
+  const availability = req.query.availability === 'true';
+  const result = await bikeService.getBikes(
+    searchTerm,
+    minPrice,
+    maxPrice,
+    availability,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

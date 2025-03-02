@@ -18,19 +18,32 @@ const createBike = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield bike_model_1.default.create(payload);
     return result;
 });
-const getBikes = (searchTerm) => __awaiter(void 0, void 0, void 0, function* () {
+const getBikes = (searchTerm, minPrice, maxPrice, availability) => __awaiter(void 0, void 0, void 0, function* () {
     // filter data accordingto searchTerm using $or method
-    const query = searchTerm
+    const searchQueryObj = searchTerm
         ? {
             $or: [
-                { category: searchTerm },
-                { brand: searchTerm },
-                { name: searchTerm },
+                { category: { $regex: searchTerm, $options: 'i' } },
+                { brand: { $regex: searchTerm, $options: 'i' } },
+                { name: { $regex: searchTerm, $options: 'i' } },
+                { model: { $regex: searchTerm, $options: 'i' } },
             ],
         }
         : {};
-    const result = yield bike_model_1.default.find(query);
-    return result;
+    const searchQuery = bike_model_1.default.find(searchQueryObj);
+    if (availability) {
+        const availabilityQueryQbj = {
+            inStock: availability,
+        };
+        const availabilityQuery = yield searchQuery.find(availabilityQueryQbj);
+        return yield availabilityQuery;
+    }
+    if (minPrice && maxPrice) {
+        const priceQueryObj = { price: { $gte: minPrice, $lte: maxPrice } };
+        const priceQuery = yield searchQuery.find(priceQueryObj);
+        return yield priceQuery;
+    }
+    return yield searchQuery;
 });
 const getSingleBike = (id) => __awaiter(void 0, void 0, void 0, function* () {
     //get the specific bike from bikes collection

@@ -6,7 +6,6 @@ const createUser = catchAsync(async (req, res) => {
   const userData = await UserServices.createUserIntoDB(req.body);
 
   const modifiedUser = {
-    _id: userData?._id,
     name: userData?.name,
     email: userData?.email,
   };
@@ -18,6 +17,37 @@ const createUser = catchAsync(async (req, res) => {
   });
 });
 
+const getUsers = catchAsync(async (req, res) => {
+  const order = await UserServices.getUsers();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.CREATED,
+    message: 'Users retrieved successfully',
+    data: order,
+  });
+});
+
+const updateUserProfile = catchAsync(async (req, res) => {
+  // get the orderId in parmas
+  const userId = req.params.userId;
+  // take the json body of bike details from response and send it to update function
+  const body = { ...req.body };
+
+  const result = await UserServices.updateUserProfile(userId, body);
+
+  // console.log('here', req.user, req.params);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'profile updated successfully',
+    data: result,
+  });
+});
+
 export const UserControllers = {
   createUser,
+  getUsers,
+  updateUserProfile,
 };

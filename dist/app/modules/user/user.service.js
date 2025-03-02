@@ -11,10 +11,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserServices = void 0;
 const user_model_1 = require("./user.model");
+const user_utils_1 = require("./user.utils");
 const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    payload.id = yield (0, user_utils_1.generateUserId)();
     const user = yield user_model_1.User.create(payload);
     return user;
 });
+const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield user_model_1.User.find();
+    return data;
+});
+const updateUserProfile = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    // udpate
+    const result = yield user_model_1.User.findByIdAndUpdate(id, data, {
+        new: true,
+    });
+    return result;
+});
 exports.UserServices = {
+    updateUserProfile,
     createUserIntoDB,
+    getUsers,
 };
