@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: 'https://bike-shop-server-beta.vercel.app',
+    origin: 'https://endearing-brigadeiros-6aab02.netlify.app',
     credentials: true,
   }),
 );
