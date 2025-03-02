@@ -22,7 +22,6 @@ const auth = (...requiredRoles) => {
     return (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         const token = (_a = req === null || req === void 0 ? void 0 : req.headers) === null || _a === void 0 ? void 0 : _a.authorization;
-        console.log('ksdjfs', token);
         //if the token is send from the client
         if (!token) {
             throw new AppError_1.AppError(http_status_1.default.UNAUTHORIZED, 'You are not authorized');
