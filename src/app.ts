@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: 'https://endearing-brigadeiros-6aab02.netlify.app',
+    origin: 'https://bike-bari-6a.netlify.app',
     credentials: true,
   }),
 );
