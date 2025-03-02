@@ -29,7 +29,7 @@ orderRoutes.get(
 orderRoutes.patch(
   '/:orderId',
   auth(USER_ROLE.admin, USER_ROLE.customer),
-  orderController.getSingleOrder,
+  orderController.updateOrder,
 );
 orderRoutes.get(
   '/:orderId',

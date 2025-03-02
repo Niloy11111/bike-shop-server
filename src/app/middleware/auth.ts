@@ -12,8 +12,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req?.headers?.authorization;
 
-    console.log('ksdjfs', token);
-
     //if the token is send from the client
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized');

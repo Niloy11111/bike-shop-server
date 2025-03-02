@@ -12,7 +12,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: 'https://bike-bari-6a.netlify.app',
+    origin: ['https://bike-bari-6a.netlify.app', 'http://localhost:5173'],
     credentials: true,
   }),
 );

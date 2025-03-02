@@ -11,7 +11,7 @@
     "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "start:prod": "node ./dist/server.js",
     "test": "node src/test.js",
-    "commit": "git add . && git commit -m \"change cors url\" && git push"
+    "commit": "git add . && git commit -m \"fix order update issue\" && git push"
   },
   "keywords": [],
   "author": "",

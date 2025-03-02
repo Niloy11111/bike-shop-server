@@ -22,7 +22,7 @@ export interface TOrder extends Document {
   }[];
   totalPrice: number;
   status: 'Pending' | 'Paid' | 'Shipped' | 'Completed' | 'Cancelled';
-  estimatedDeliveryDate: Date;
+  estimatedDeliveryDate: string;
   transaction: {
     id: string;
     transactionStatus: string;
@@ -38,7 +38,7 @@ export interface TOrder extends Document {
 
 export type IOrder = {
   status: 'Pending' | 'Paid' | 'Shipped' | 'Completed' | 'Cancelled';
-  estimatedDeliveryDate: Date;
+  estimatedDeliveryDate: string;
 };
 
 export interface TCustomerExpenseData {
