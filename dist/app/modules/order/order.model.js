@@ -35,7 +35,7 @@ const OrderSchema = new mongoose_1.Schema({
     },
     estimatedDeliveryDate: {
         type: Date,
-        default: '',
+        default: null,
     },
     status: {
         type: String,

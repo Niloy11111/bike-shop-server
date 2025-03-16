@@ -36,7 +36,7 @@ const OrderSchema = new Schema<TOrder>(
     },
     estimatedDeliveryDate: {
       type: Date,
-      default: '',
+      default: null,
     },
     status: {
       type: String,

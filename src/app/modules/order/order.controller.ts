@@ -3,26 +3,39 @@ import mongoose from 'mongoose';
 import { AppError } from '../../errors/AppError';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { TOrderUser } from './order.interface';
 import { orderService } from './order.service';
 
 const createOrder = catchAsync(async (req, res) => {
   const user = req?.user;
+
   // console.log('user', user);
-  // const user = {
-  //   _id: '67af72dd0dad6065be588c3e',
-  //   name: 'Ehtisam',
-  //   email: 'xyz@gmail.com',
-  //   role: 'user',
-  //   phone: '012345678901',
-  //   address: 'N/A',
-  //   city: 'N/A',
-  //   createdAt: '2025-02-14T16:44:13.136Z',
-  //   updatedAt: '2025-02-14T16:44:13.136Z',
+  // user {
+  //   _id: new ObjectId('67a3ba2093b7001ae076e742'),
+  //   id: '2025000001',
+  //   name: 'david',
+  //   email: 'david@gmail.com',
+  //   password: '$2b$12$22.z9biJAajDIcad0C6WPOm3FGJfOQmhO8p0y3KaQ7c81yRPabhiC',
+  //   needsPasswordChange: false,
+  //   role: 'customer',
+  //   isBlocked: false,
+  //   isDeleted: false,
+  //   createdAt: 2025-02-05T19:21:04.083Z,
+  //   updatedAt: 2025-03-01T05:22:44.074Z,
   //   __v: 0,
-  // };
+  //   passwordChangedAt: 2025-02-05T19:21:16.823Z,
+  //   city: 'New York',
+  //   country: 'USA',
+  //   img: 'http://res.cloudinary.com/dofbykuhh/image/upload/v1740806428/mlecrufekdowjyc1bdxw.png',
+  //   phone: '019459859423'
+  // }
 
   // console.log(req);
-  const order = await orderService.createOrder(user, req.body, req.ip!);
+  const order = await orderService.createOrder(
+    user as TOrderUser,
+    req.body,
+    req.ip!,
+  );
   console.log(req.ip);
 
   console.log('order', order);

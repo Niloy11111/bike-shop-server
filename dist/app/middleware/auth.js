@@ -42,6 +42,7 @@ const auth = (...requiredRoles) => {
         }
         //decode undefiend
         req.user = user;
+        // (req.user as TOrderUser) = user as TOrderUser;
         next();
     }));
 };

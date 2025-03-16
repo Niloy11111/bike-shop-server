@@ -1,6 +1,4 @@
 "use strict";
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -12,8 +10,8 @@ const AppError_1 = require("../errors/AppError");
 const handleDuplicateError_1 = __importDefault(require("../errors/handleDuplicateError"));
 const handleValidationError_1 = __importDefault(require("../errors/handleValidationError"));
 const handleZodError_1 = __importDefault(require("../errors/handleZodError"));
-const globalErrorHanler = (err, req, res, next) => {
-    let statusCode = 500;
+const globalErrorHandler = (err, req, res, next) => {
+    let statusCode = (err === null || err === void 0 ? void 0 : err.statusCode) || 500;
     let message = err.message || 'Something went wrong';
     let errorSources = [
         {
@@ -25,27 +23,34 @@ const globalErrorHanler = (err, req, res, next) => {
         const simplifiedError = (0, handleZodError_1.default)(err);
         statusCode = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.statusCode;
         message = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.message;
-        errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;
+        errorSources = (simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources) || [
+            { path: '', message: 'Something went wrong' },
+        ];
     }
     else if ((err === null || err === void 0 ? void 0 : err.name) === 'ValidationError') {
         const simplifiedError = (0, handleValidationError_1.default)(err);
         statusCode = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.statusCode;
         message = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.message;
-        errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;
+        errorSources = (simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources) || [
+            { path: '', message: 'Something went wrong' },
+        ];
     }
     else if ((err === null || err === void 0 ? void 0 : err.name) === 'CastError') {
         const simplifiedError = (0, handleCastError_1.default)(err);
         statusCode = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.statusCode;
         message = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.message;
-        errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;
+        errorSources = (simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources) || [
+            { path: '', message: 'Something went wrong' },
+        ];
     }
     else if ((err === null || err === void 0 ? void 0 : err.code) === 11000) {
         const simplifiedError = (0, handleDuplicateError_1.default)(err);
         statusCode = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.statusCode;
         message = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.message;
-        errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;
+        errorSources = (simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources) || [
+            { path: '', message: 'Something went wrong' },
+        ];
     }
-    // this makes a difference which is it set the message of errorSources orginally
     else if (err instanceof AppError_1.AppError) {
         statusCode = err === null || err === void 0 ? void 0 : err.statusCode;
         message = err.message;
@@ -65,12 +70,11 @@ const globalErrorHanler = (err, req, res, next) => {
             },
         ];
     }
-    // ultimate return
-    return res.status(statusCode).json({
+    res.status(statusCode).json({
         success: false,
         message,
         errorSources,
         stack: config_1.default.NODE_ENV === 'development' ? err === null || err === void 0 ? void 0 : err.stack : null,
     });
 };
-exports.default = globalErrorHanler;
+exports.default = globalErrorHandler;

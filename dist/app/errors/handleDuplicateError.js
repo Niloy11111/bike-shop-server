@@ -14,6 +14,7 @@ const handleDuplicateError = (err) => {
         statusCode,
         message: 'Invalid ID',
         error: error,
+        errorSources: error,
     };
 };
 exports.default = handleDuplicateError;

@@ -1,18 +1,17 @@
+import { ErrorRequestHandler, ParamsDictionary, ParsedQs } from 'express';
+import { TUser } from '../modules/user/user.interface';
+
 declare global {
   namespace Express {
-    interface Request {
-      user?: {
-        _id: string;
-        name: string;
-        email: string;
-        role: string;
-        phone: string;
-        address: string;
-        city: string;
-        createdAt: string;
-        updatedAt: string;
-        __v: number;
-      };
+    interface Request
+      extends ErrorRequestHandler<
+        ParamsDictionary,
+        any,
+        any,
+        ParsedQs,
+        Record<string, any>
+      > {
+      user?: TUser;
     }
   }
 }

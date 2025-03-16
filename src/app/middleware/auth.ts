@@ -3,8 +3,7 @@ import httpStatus from 'http-status';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
 import { AppError } from '../errors/AppError';
-import { TOrderUser } from '../modules/order/order.interface';
-import { TUserRole } from '../modules/user/user.interface';
+import { TUser, TUserRole } from '../modules/user/user.interface';
 import { User } from '../modules/user/user.model';
 import catchAsync from '../utils/catchAsync';
 
@@ -42,8 +41,9 @@ const auth = (...requiredRoles: TUserRole[]) => {
     }
 
     //decode undefiend
+    req.user = user as unknown as TUser;
 
-    (req.user as TOrderUser) = user as TOrderUser;
+    // (req.user as TOrderUser) = user as TOrderUser;
     next();
   });
 };

@@ -12,6 +12,7 @@ const handleCastError = (err) => {
         statusCode,
         message: 'Invalid ID',
         error,
+        errorSources: error,
     };
 };
 exports.default = handleCastError;

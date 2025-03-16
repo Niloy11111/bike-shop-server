@@ -1,17 +1,24 @@
 import { Date, Document, Types } from 'mongoose';
+import { TUser } from '../user/user.interface';
 
-export interface TOrderUser {
+export interface TOrderUser extends TUser {
   _id: string;
-  name: string;
-  email: string;
-  role: string;
-  phone: string;
-  address: string;
-  city: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
+
+// export interface TOrderUser {
+//   _id: string;
+//   name: string;
+//   email: string;
+//   role: string;
+//   phone: string;
+//   address: string;
+//   city: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   __v: number;
+// }
 
 export interface TOrder extends Document {
   user: Pick<TOrderUser, 'name' | 'email' | 'phone' | '_id'>;
@@ -22,7 +29,7 @@ export interface TOrder extends Document {
   }[];
   totalPrice: number;
   status: 'Pending' | 'Paid' | 'Shipped' | 'Completed' | 'Cancelled';
-  estimatedDeliveryDate: string;
+  estimatedDeliveryDate: Date;
   transaction: {
     id: string;
     transactionStatus: string;

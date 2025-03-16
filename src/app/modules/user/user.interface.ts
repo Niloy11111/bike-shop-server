@@ -2,7 +2,7 @@
 import { Model } from 'mongoose';
 import { USER_ROLE } from './user.const';
 
-export interface TUser extends Document {
+export interface TUser {
   id: string;
   name: string;
   email: string;
