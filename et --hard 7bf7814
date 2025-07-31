@@ -1,0 +1,26 @@
+[33m1361470[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{0}: commit: edited
+[33m7bf7814[m HEAD@{1}: commit: edited
+[33mbb9f6df[m HEAD@{2}: checkout: moving from main to main
+[33mbb9f6df[m HEAD@{3}: rebase (finish): returning to refs/heads/main
+[33mbb9f6df[m HEAD@{4}: commit: edited
+[33m5b3e61d[m HEAD@{5}: commit: edited
+[33m650f60d[m HEAD@{6}: commit: designed readme file
+[33mcb20c8e[m HEAD@{7}: pull --rebase (start): checkout cb20c8e1da2f859cff971ba62859e2b96cb803bf
+[33m32c875d[m HEAD@{8}: commit: edited
+[33mbb31f68[m HEAD@{9}: commit: edited
+[33m2e02c8d[m HEAD@{10}: commit: solved all typescript error
+[33m82e085a[m HEAD@{11}: commit: solved all typescript error
+[33m94e72db[m HEAD@{12}: commit: organized the readme file with prope instructions
+[33m757a3d4[m HEAD@{13}: commit: fix order update issue
+[33m5147313[m HEAD@{14}: commit: change cors url
+[33m3efce02[m HEAD@{15}: commit: solved cors issue
+[33m71bd5c6[m HEAD@{16}: commit: done final code
+[33m23d53e1[m HEAD@{17}: commit: done final code
+[33m24fe21c[m HEAD@{18}: Branch: renamed refs/heads/main to refs/heads/main
+[33m24fe21c[m HEAD@{20}: commit: first commit
+[33m02fc43f[m HEAD@{21}: commit: made admin action api like block user,delete blog
+[33ma67cc8f[m HEAD@{22}: commit: made admin action api like block user,delete blog
+[33m73e73a3[m HEAD@{23}: commit: Register user and log in user with token handling
+[33m1a112f0[m HEAD@{24}: commit: updated
+[33mabf7f5f[m HEAD@{25}: Branch: renamed refs/heads/master to refs/heads/main
+[33mabf7f5f[m HEAD@{27}: commit (initial): first commit
